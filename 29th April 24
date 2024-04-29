@@ -1,0 +1,59 @@
+
+***************1382. Balance a Binary Search Tree***********
+class Solution {
+    private:
+void inorder(TreeNode* root,vector<int>&nums){
+    if(root==NULL){
+        return;
+    }
+    inorder(root->left,nums);
+    nums.push_back(root->val);
+    inorder(root->right,nums);
+
+}
+ TreeNode* constructBST(vector<int>&nums,int left ,int right){
+        if(left >right){
+            return NULL;
+        }
+        int mid=left+(right-left)/2;
+        TreeNode* root=new TreeNode(nums[mid]);
+        root->left=constructBST(nums,left,mid-1);
+        root->right=constructBST(nums,mid+1,right);
+        return root;
+    }
+public:
+    TreeNode* balanceBST(TreeNode* root) {
+     
+vector<int>nums;
+inorder(root,nums);
+return constructBST(nums,0,nums.size()-1);
+    }
+};
+
+**********2997. Minimum Number of Operations to Make Array XOR Equal to K*****************
+
+class Solution {
+public:
+    int minOperations(vector<int>& nums, int k) {
+       vector<int>one_bits(32,0);
+       for(auto it:nums){
+        
+            for(int i=0;i<32;i++){
+                if(it &(1<<i))
+  one_bits[i]++;
+            }
+        
+       }
+      int ans=0;
+for(int i=0;i<32;i++){
+    if(k & (1<<i)){
+        ans+=one_bits[i]%2==0;
+    }
+    else{
+        ans+=one_bits[i]%2==1;
+ 
+       }   }
+
+return ans;
+    }
+};
